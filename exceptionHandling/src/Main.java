@@ -15,7 +15,7 @@ public class Main {
         //2'den fazla catch blogu olabilir.
         //başka catch blogu içerisinde hatalar ayrıştırılabilir ve
         //onun haricinde oluşabilecek hatalar loglanabilir.
-        //(Exception exception) böyle loglanır, diger hatalar;
+        //(Exception exception) böyle loglanır, diger hatalar ise;
         ////ArrayIndexOutOfBoundsException bu şekilde oluşturulur
         finally { //ister try, ister catch çalışsın; finally blogu her türlü çalışacaktir.
                 System.out.println("Ben hep çalişirim");
