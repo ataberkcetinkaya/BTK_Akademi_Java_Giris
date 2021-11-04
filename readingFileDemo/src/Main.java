@@ -12,9 +12,15 @@ public class Main {
 
         //veya Surround with try/catch (ampulden)
 
+        int total = 0;
+
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("C:\\javademos\\readingFileDemo\\src\\sayilar.txt"));
+            String line = null;
+            while((line = reader.readLine()) !=null) { //bir satır oku demek, okuyabilirse true data varsa
+                total += Integer.valueOf(line);
+            } System.out.println(total);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
