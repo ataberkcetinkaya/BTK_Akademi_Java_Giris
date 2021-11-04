@@ -1,12 +1,12 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         //getFileInfo();
+        readFile();
+        writeFile();
         readFile();
 
     }
@@ -55,6 +55,18 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void writeFile() {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("C:\\javademos\\files\\students.txt", true));
+            //filePath sonuna true değeri ile üzerine append ettirme işlemi yaptiriyoruz. yeni değerleri yazdiktan sonra eskileri silmemesi için
+            bufferedWriter.newLine();
+            bufferedWriter.write("yeni_deger2");
+            System.out.println("dosyaya yazildi");
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
