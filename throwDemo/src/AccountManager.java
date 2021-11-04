@@ -6,12 +6,15 @@ public class AccountManager {
     }
 
     public void withdraw(double amount) throws Exception {
-        if (balance >= amount) {
+        if (balance >= amount) {        //throws BalanceInsufficentException
                 balance = getBalance() - amount;
         }
         else {
             //System.out.println("yetersiz hesap");
-            throw new Exception("yetersiz hesap");
+            //throw new Exception("yetersiz hesap");
+            //CUSTOM EXCEPTION;
+            throw new BalanceInsufficentException("yetersiz hesap");
+
         }
     }
 
