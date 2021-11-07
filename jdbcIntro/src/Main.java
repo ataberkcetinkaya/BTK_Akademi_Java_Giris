@@ -13,14 +13,11 @@ public class Main {
         try {
             connection = dbHelper.getConnection();
             //System.out.println("connection established");
-            String sql = "insert into city (Name,CountryCode,District,Population) values (?,?,?,?)";
+            String sql = "update city set population = 670000 where id=?"; //ayni anda farkli colonlarda update edilebilir; ,district'new_district'
             statement = connection.prepareStatement(sql);
-            statement.setString(1, "Nilufer");
-            statement.setString(2, "TUR");
-            statement.setString(3, "Bursa, Marmara");
-            statement.setInt(4, 570542);
+            statement.setInt(1,4088); //executeUpdate üzerinde herhangi bir yerde (statement'tan sonra)
             statement.executeUpdate();
-                System.out.println("Added.");
+                System.out.println("Updated.");
         }
         catch (SQLException exception) {
             dbHelper.showErrorMessage(exception);
@@ -53,6 +50,34 @@ public class Main {
             dbHelper.showErrorMessage(exception);
         }
         finally {
+            connection.close();
+        }
+    }
+
+    public static void insertData() throws SQLException {
+        Connection connection = null;
+        DbHelper dbHelper = new DbHelper();
+
+        PreparedStatement statement = null; //sql sorgularinin işlemlerini yapacak yer
+        ResultSet resultSet;  //sorgularin sonucunda gelecek data resultset'tir
+
+        try {
+            connection = dbHelper.getConnection();
+            //System.out.println("connection established");
+            String sql = "insert into city (Name,CountryCode,District,Population) values (?,?,?,?)";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "Nilufer");
+            statement.setString(2, "TUR");
+            statement.setString(3, "Bursa, Marmara");
+            statement.setInt(4, 570542);
+            statement.executeUpdate();
+            System.out.println("Added.");
+        }
+        catch (SQLException exception) {
+            dbHelper.showErrorMessage(exception);
+        }
+        finally {
+            statement.close();
             connection.close();
         }
     }
