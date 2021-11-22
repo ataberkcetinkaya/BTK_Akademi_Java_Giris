@@ -1,9 +1,57 @@
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 
 public class demo extends javax.swing.JFrame {
-
+    DefaultTableModel model;
 
     public demo() {
         initComponents();
+        model = (DefaultTableModel)tblCities.getModel();
+        try {
+            ArrayList<City> cities = getCities();
+            for (City city : cities) {
+                Object[] row = {city.getId(), city.getName(), city.getCountryCode(), city.getDistrict(), city.getPopulation()};
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            
+        }
+    }
+    
+    public ArrayList<City> getCities() throws SQLException {
+        Connection connection = null;
+        DbHelper dbHelper = new DbHelper();
+        Statement statement = null; //sql sorgularinin işlemlerini yapacak yer
+        ResultSet resultSet;  //sorgularin sonucunda gelecek data resultset'tir
+        
+        ArrayList<City> cities = null;
+        
+        try {
+            connection = dbHelper.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select * from City");
+            cities = new ArrayList<City>();
+            
+            while (resultSet.next()) {
+                cities.add(new City(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("Name"),
+                        resultSet.getString("CountryCode"),
+                        resultSet.getString("District"),
+                        resultSet.getInt("Population")
+                ));
+            }
+        }
+        catch(SQLException exception) {
+            dbHelper.showErrorMessage(exception);
+        }
+        finally {
+            statement.close();
+            connection.close();
+        }
+        return cities;
     }
 
     @SuppressWarnings("unchecked")
@@ -53,15 +101,15 @@ public class demo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
